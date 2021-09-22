@@ -19,7 +19,6 @@ export default function Menu () {
 
 
 
-
     return (
         <>
 
@@ -27,7 +26,7 @@ export default function Menu () {
                 <h1> Flip Cards Game</h1>
                 <h2 > High Score: {highScore}</h2>
                 <div className="options">
-                    { options === null ? (
+                    { !options ? (
                         <>
                             <button onClick= { () => setOptions(12)}> Easy </button>
                             <button onClick= { () => setOptions(18)}> Medium </button>
@@ -40,7 +39,7 @@ export default function Menu () {
                             setOptions(null)
                             setTimeout( () => {
                                 setOptions(selectedOption)
-                            }, 1000)
+                            }, 5)
                         }}> Start Over</button>
                         <button onClick={() => setOptions(null)} > Menu </button>
                         </>
@@ -50,7 +49,13 @@ export default function Menu () {
 
 
             { options ? ( 
-                <h2>to be implement</h2>
+                <Game 
+                    options = {options}
+                    setOptions = {setOptions}
+                    highScore = {highScore}
+                    setHighScore = {setHighScore}
+
+                />
             ) :
              ( 
                  <h2>please choose a mood to play</h2>
