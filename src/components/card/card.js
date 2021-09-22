@@ -27,10 +27,30 @@ export default function Card ({
       }, [flippedIndex])
 
 
-      const onCardClick = () => {
-        console.log('Card Clicked')
-        setFlipped(state => state)
-      }
+      
+
+        const onCardClick = () => {
+            if (!game[id].flipped && flippedCount % 3 === 0) {
+              setFlipped(state => !state)
+              setFlippedCount(flippedCount + 1)
+              const newIndexes = [...flippedIndex]
+              newIndexes.push(id)
+              setFlippedIndex(newIndexes)
+            } else if (
+              flippedCount % 3 === 1 &&
+              !game[id].flipped &&
+              flippedIndex.indexOf(id) < 0
+            ) {
+              setFlipped(state => !state)
+              setFlippedCount(flippedCount + 1)
+              const newIndexes = [...flippedIndex]
+              newIndexes.push(id)
+              setFlippedIndex(newIndexes)
+            }
+          }
+
+       
+
 
     return (
         <div className="test" onClick={onCardClick}> 
