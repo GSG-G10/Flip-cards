@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useSpring, animated as a } from "react-spring";
 
 import Game from "../game/game"
 
 import './menu.css'
 
 export default function Menu () {
-
     const [options, setOptions] = useState(null);
     const [highScore, setHighScore] = useState();
+    const [score, setScore] = useState(0);
 
     useEffect( () => {
 
-
+        const json = localStorage.getItem('highest-score')
+        const savedScore = JSON.parse(json)
+        if (savedScore) {
+          setHighScore(savedScore)
+        }
+        
 
         return () => console.log('clearup here') ;
     }, [])
 
+    const scoreHandler = (e) => {
+        setScore(e);
+    }
 
 
     return (
@@ -24,7 +31,8 @@ export default function Menu () {
 
             <div className="container">
                 <h1> Flip Cards Game</h1>
-                <h2 > High Score: {highScore}</h2>
+                <h2 > Highest Score: {highScore}</h2>
+                <h2 > your Score:{score} </h2>
                 <div className="options">
                     { !options ? (
                         <>
@@ -54,6 +62,7 @@ export default function Menu () {
                     setOptions = {setOptions}
                     highScore = {highScore}
                     setHighScore = {setHighScore}
+                    scoreHandler= {scoreHandler}
 
                 />
             ) :

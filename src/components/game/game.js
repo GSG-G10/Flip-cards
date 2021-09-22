@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSpring, animated as a } from "react-spring";
 
 import Card from "../card/card";
 
@@ -7,12 +6,12 @@ import Card from "../card/card";
 import './game.css'
 
 
-export default function Game ({options, setOptions, highScore, setHighScore}) {
+export default function Game ({options, setOptions, highScore, setHighScore, scoreHandler}) {
         const [game, setGame] = useState([]); // game length equals num stored in options
         const [flippedCount, setFlippedCount] = useState(0);
         const [flippedIndex, setFlippedIndex] = useState([]);
+        const [score, setScore] = useState(0);
 
-        console.log(game);
 
         const colors = [
             '#ecdb54',
@@ -64,6 +63,52 @@ export default function Game ({options, setOptions, highScore, setHighScore}) {
 
         useEffect(() => {
           // Loads when the game variable changes
+          const finished = !game.some(card => !card.flipped)
+          if (finished && game.length > 0) {
+            setTimeout(() => {
+              // const bestPossible = game.length
+              // let multiplier
+        
+              // if (options === 12) {
+              //   multiplier = 5
+              // } else if (options === 18) {
+              //   multiplier = 2.5
+              // } else if (options === 24) {
+              //   multiplier = 1
+              // }
+        
+              // const pointsLost = multiplier * (0.66 * flippedCount - bestPossible)
+        
+              // let score
+              // if (pointsLost < 100) {
+              //   score = 100 - pointsLost
+              // } else {
+              //   score = 0
+              // }
+
+              // localStorage.setItem('score', score)
+              
+
+
+              // if (score > highScore) {
+              //   setHighScore(score)
+              //   const json = JSON.stringify(score)
+              //   localStorage.setItem('highest-score', json)
+              // }
+        
+              const newGame = window.confirm('You Win!, SCORE: ' + score + ' New Game?')
+              if (newGame) {
+                const gameLength = game.length
+                setOptions(null)
+                setTimeout(() => {
+                  setOptions(gameLength)
+                }, 5)
+              } else {
+                setOptions(null)
+              }
+            }, 500)
+          }
+
         }, [game])
 
 
@@ -73,10 +118,40 @@ export default function Game ({options, setOptions, highScore, setHighScore}) {
           const match = game[flippedIndex[0]].colorId === game[flippedIndex[1]].colorId
 
           if (match) {
-            const newGame = [...game]
-            newGame[flippedIndex[0]].flipped = true
-            newGame[flippedIndex[1]].flipped = true
-            setGame(newGame)
+
+
+            const bestPossible = game.length
+              let multiplier
+        
+              if (options === 12) {
+                multiplier = 5
+              } else if (options === 18) {
+                multiplier = 2.5
+              } else if (options === 24) {
+                multiplier = 1
+              }
+        
+              const pointsLost = multiplier * (0.66 * flippedCount - bestPossible)
+        
+              let score
+              if (pointsLost < 100) {
+                score = 100 - pointsLost
+              } else {
+                score = 0
+              }
+
+              
+              
+              localStorage.setItem('score', score)
+              
+              
+              
+              const newGame = [...game]
+              newGame[flippedIndex[0]].flipped = true
+              newGame[flippedIndex[1]].flipped = true
+              setGame(newGame)
+              setScore(score)
+              scoreHandler(score);
         
             const newIndexes = [...flippedIndex]
             newIndexes.push(false)
