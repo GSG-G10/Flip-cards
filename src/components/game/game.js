@@ -75,7 +75,7 @@ export default function Game ({options, setOptions, highScore, setHighScore}) {
 
 
 
-        if (game.length === 0) return <div>loading...</div>
+        if (!game.length) return <div>loading...</div> //game only renders when cards are ready
         else {
           return (
             <div id="cards">

@@ -4,11 +4,52 @@ import { useSpring, animated as a } from "react-spring";
 
 import './card.css'
 
-export default function Card (props) {
+export default function Card ({
+    id,
+    color,
+    game,
+    flippedCount,
+    setFlippedCount,
+    flippedIndex,
+    setFlippedIndex,
+  }) {
+
+
+    const [flipped, setFlipped] = useState(false);
+    const {transform, opacity} = useSpring({
+        opacity: flipped ? 1 : 0,
+        transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
+        config: {mass: 5, tension: 500, friction: 80},
+      })
+
+      useEffect(() => {
+        console.log('Flipped Indexes Changed')
+      }, [flippedIndex])
+
+
+      const onCardClick = () => {
+        console.log('Card Clicked')
+        setFlipped(state => state)
+      }
 
     return (
-        <div> 
-            <h3> I am a card !</h3>
+        <div className="test" onClick={onCardClick}> 
+         <a.div
+        className="c back"
+        style={{
+          opacity: opacity.interpolate(o => 1 - o),
+          transform,
+        }}
+      />
+         <a.div
+        className="c front"
+        style={{
+          opacity,
+          transform: transform.interpolate(t => `${t} rotateX(180deg)`),
+          background: color,
+        }}
+      />   
+
         </div> 
     );
 }
