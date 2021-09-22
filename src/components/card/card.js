@@ -24,6 +24,16 @@ export default function Card ({
 
       useEffect(() => {
         console.log('Flipped Indexes Changed')
+        if (flippedIndex[2] === true && flippedIndex.indexOf(id) > -1) {
+            setTimeout(() => {
+              setFlipped(state => !state)
+              setFlippedCount(flippedCount + 1)
+              setFlippedIndex([])
+            }, 1000)
+          } else if (flippedIndex[2] === false && id === 0) {
+            setFlippedCount(flippedCount + 1)
+            setFlippedIndex([])
+          }
       }, [flippedIndex])
 
 

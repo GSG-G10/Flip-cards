@@ -70,6 +70,22 @@ export default function Game ({options, setOptions, highScore, setHighScore}) {
 
         if (flippedIndex.length === 2) {
           // Runs if two cards have been flipped
+          const match = game[flippedIndex[0]].colorId === game[flippedIndex[1]].colorId
+
+          if (match) {
+            const newGame = [...game]
+            newGame[flippedIndex[0]].flipped = true
+            newGame[flippedIndex[1]].flipped = true
+            setGame(newGame)
+        
+            const newIndexes = [...flippedIndex]
+            newIndexes.push(false)
+            setFlippedIndex(newIndexes)
+          } else {
+            const newIndexes = [...flippedIndex]
+            newIndexes.push(true)
+            setFlippedIndex(newIndexes)
+          }
         }
 
 
