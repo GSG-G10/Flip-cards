@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSpring, animated as a } from "react-spring";
 
+import Game from "../game/game"
+
 import './menu.css'
 
 export default function Menu () {
@@ -45,6 +47,14 @@ export default function Menu () {
                     )}
                 </div>
             </div>
+
+
+            { options ? ( 
+                <h2>to be implement</h2>
+            ) :
+             ( 
+                 <h2>please choose a mood to play</h2>
+             )}
 
         </>
 
