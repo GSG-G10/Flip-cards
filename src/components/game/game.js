@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Card from "../card/card";
 
@@ -11,6 +11,11 @@ export default function Game ({options, setOptions, highScore, setHighScore, sco
         const [flippedCount, setFlippedCount] = useState(0);
         const [flippedIndex, setFlippedIndex] = useState([]);
         const [score, setScore] = useState(0);
+        const [best, setBest] = useState(0);
+
+        console.log('HEEREEEE',best);
+
+        // const [result, setResult] = useState([]);
 
 
         const colors = [
@@ -64,86 +69,49 @@ export default function Game ({options, setOptions, highScore, setHighScore, sco
         useEffect(() => {
           // Loads when the game variable changes
           const finished = !game.some(card => !card.flipped)
+          scoreHandler(flippedCount)
+          const trying = best
           if (finished && game.length > 0) {
             setTimeout(() => {
-              // const bestPossible = game.length
-              // let multiplier
         
-              // if (options === 12) {
-              //   multiplier = 5
-              // } else if (options === 18) {
-              //   multiplier = 2.5
-              // } else if (options === 24) {
-              //   multiplier = 1
-              // }
-        
-              // const pointsLost = multiplier * (0.66 * flippedCount - bestPossible)
-        
-              // let score
-              // if (pointsLost < 100) {
-              //   score = 100 - pointsLost
-              // } else {
-              //   score = 0
-              // }
+                 if (true) {
+                const result = flippedCount;
+                localStorage.setItem('result',  JSON.stringify(result))
+                  setBest(result)
 
-              // localStorage.setItem('score', score)
-              
+                  const testing = best;
+                  if (testing < result){
+                    setBest(testing)
+                  localStorage.setItem('BEST',  JSON.stringify(testing) ) }
 
+                  if (testing > result){
+                    localStorage.setItem('BEST',  JSON.stringify(result) ) }
 
-              // if (score > highScore) {
-              //   setHighScore(score)
-              //   const json = JSON.stringify(score)
-              //   localStorage.setItem('highest-score', json)
-              // }
-        
-              const newGame = window.confirm('You Win!, SCORE: ' + score + ' New Game?')
-              if (newGame) {
+                    console.log("FINAL BEST: ", testing);
+                  
+
                 const gameLength = game.length
                 setOptions(null)
                 setTimeout(() => {
                   setOptions(gameLength)
                 }, 5)
               } else {
-                setOptions(null)
               }
-            }, 500)
+            }, 4000)
           }
 
         }, [game])
 
 
 
+
         if (flippedIndex.length === 2) {
+
           // Runs if two cards have been flipped
+
           const match = game[flippedIndex[0]].colorId === game[flippedIndex[1]].colorId
 
           if (match) {
-
-
-            const bestPossible = game.length
-              let multiplier
-        
-              if (options === 12) {
-                multiplier = 5
-              } else if (options === 18) {
-                multiplier = 2.5
-              } else if (options === 24) {
-                multiplier = 1
-              }
-        
-              const pointsLost = multiplier * (0.66 * flippedCount - bestPossible)
-        
-              let score
-              if (pointsLost < 100) {
-                score = 100 - pointsLost
-              } else {
-                score = 0
-              }
-
-              
-              
-              localStorage.setItem('score', score)
-              
               
               
               const newGame = [...game]

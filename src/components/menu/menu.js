@@ -31,8 +31,8 @@ export default function Menu () {
 
             <div className="container">
                 <h1> Flip Cards Game</h1>
-                <h2 > Highest Score: {highScore}</h2>
-                <h2 > your Score:{score} </h2>
+                <h2 > Best Score: {highScore}</h2>
+                <h2 > your Score: {score} </h2>
                 <div className="options">
                     { !options ? (
                         <>
